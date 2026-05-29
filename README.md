@@ -15,15 +15,49 @@
 
 What is context window ?
 
+What all is loaded during start of a session ?
 
-
-
-Context Rot 
+Context Rot ?
 
 How existing Model itself hadles this 
 
 Room for further improvemtns improvement 
 
+Imagine a developer using an AI coding assistant for 3 hours continuously.
+
+The prompt history now contains:
+
+  requirements,
+  half-finished implementations,
+  old decisions,
+  rejected approaches,
+  logs,
+  stack traces,
+  temporary experiments,
+  conflicting instructions,
+  copied documentation,
+  previous bugs,
+  architectural discussions,
+  generated code.
+
+Eventually the model starts to:
+
+  forget original constraints,
+  contradict earlier design decisions,
+  reintroduce deleted bugs,
+  generate inconsistent APIs,
+  hallucinate nonexistent abstractions,
+  mix old and new architectures,
+  ignore coding standards,
+  produce unstable reasoning.
+
+That degradation is what teams informally call:
+
+  context collapse,
+  context rot,
+  prompt drift,
+  long-context degradation,
+  attention collapse.
 
 
 ## “Context Engineering” > Prompt Engineering
@@ -63,8 +97,11 @@ Contributions are welcome! Feel free to submit issues and pull requests to impro
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Reference 
+Lost in Middle - https://huggingface.co/papers/2307.03172?utm_source=chatgpt.com
+https://arxiv.org/abs/2403.04797?utm_source=chatgpt.com
+https://arxiv.org/abs/2412.10079?utm_source=chatgpt.com
+Reddit - https://www.reddit.com/r/ContextEngineering/comments/1pclw66/context_engineering_for_agents_what_actually_works/?utm_source=chatgpt.com
 
-## Contact
 
 For questions or feedback, please open an issue in this repository.
