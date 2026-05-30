@@ -162,7 +162,7 @@ Agent B:
 * Reviews requirements alignment
 * Identifies risks
 
-H:
+Human:
 
 * Approves or rejects
 
