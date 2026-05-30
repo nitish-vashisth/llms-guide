@@ -105,3 +105,8 @@ Reddit - https://www.reddit.com/r/ContextEngineering/comments/1pclw66/context_en
 
 
 For questions or feedback, please open an issue in this repository.
+
+## Next 
+- https://arxiv.org/pdf/2603.20847
+- https://arxiv.org/abs/2604.14228?utm_source=chatgpt.com
+- https://code.claude.com/docs/en/best-practices?s=09&utm_source=chatgpt.com
