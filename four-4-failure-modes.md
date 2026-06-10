@@ -1,0 +1,702 @@
+# From Context Collapse to Production Incidents: The Four Failure Modes of Agentic Software Engineering
+
+## Introduction
+
+The software industry is entering a new era.
+
+For decades, software engineering revolved around humans translating requirements into designs, designs into code, and code into production systems. Today, coding agents can generate implementations, review pull requests, create tests, refactor large codebases, and even interact with cloud infrastructure.
+
+The productivity gains are undeniable. Features that previously required days can now be implemented in hours. Entire classes of repetitive work are disappearing.
+
+However, many engineering organizations are discovering an uncomfortable reality:
+
+**The biggest challenge with AI-assisted development is not code generation. It is maintaining architectural integrity over time.**
+
+Most teams initially evaluate coding agents by measuring:
+
+* Lines of code generated
+* Development speed
+* Pull request throughput
+* Time-to-delivery
+
+But these metrics often hide a more important question:
+
+> What happens to the architecture after hundreds or thousands of AI-assisted changes?
+
+The answer is that systems often degrade through a predictable sequence of failures.
+
+The lifecycle typically looks like this:
+
+```text
+Context Window Collapse
+            ↓
+Specification Drift
+            ↓
+Architectural Consistency Collapse
+            ↓
+Architecture Drift
+            ↓
+Verification Blindness
+            ↓
+Production Problems
+```
+
+This progression is rarely caused by a single catastrophic mistake.
+
+Instead, it emerges from hundreds of individually reasonable decisions that slowly erode the original design.
+
+Understanding this lifecycle is becoming essential for software engineers, architects, and engineering managers adopting Agentic Software Engineering.
+
+---
+
+# Part 1: Context Window Collapse
+
+## The First Failure
+
+Traditional software engineers develop a persistent mental model of a system.
+
+They understand:
+
+* Why architectural decisions were made
+* Which constraints exist
+* What tradeoffs were accepted
+* Which patterns are considered standard
+
+This understanding accumulates over months or years.
+
+Agents do not work this way.
+
+They operate within a limited context window and primarily reason about information currently visible to them.
+
+As conversations become longer and tasks become more complex, earlier decisions gradually disappear from context.
+
+This is Context Window Collapse.
+
+## Practical Example
+
+Imagine a team building a payment platform.
+
+During architecture discussions, the team agrees on several principles:
+
+```text
+Payments are event-driven
+
+Services communicate asynchronously
+
+No direct service-to-service coupling
+
+All payment state changes are published as events
+```
+
+These decisions are documented during planning.
+
+Several weeks later, a developer asks an agent:
+
+> Add a payment status endpoint for checkout.
+
+The original architecture discussion is no longer present in the active context.
+
+The agent implements:
+
+```text
+Checkout Service
+       ↓
+Direct Payment Service Call
+```
+
+The implementation works.
+
+Tests pass.
+
+The feature ships.
+
+Yet an architectural constraint has already been violated.
+
+The system has started drifting.
+
+Not because the model failed.
+
+Because the architectural intent disappeared from context.
+
+## Why This Matters
+
+Most teams assume architecture fails because engineers ignore standards.
+
+In AI-assisted development, architecture often fails because the standards are no longer visible.
+
+The problem is not incompetence.
+
+The problem is memory.
+
+## The Practical Fix: State Anchoring
+
+The most effective solution is to stop treating conversations as the source of truth.
+
+Instead, create persistent artifacts:
+
+```text
+requirements.md
+architecture.md
+decisions.md
+review.md
+```
+
+Every task begins by loading them.
+
+Example:
+
+```text
+Before implementing:
+
+Read architecture.md
+Read requirements.md
+
+Summarize:
+- Requirements
+- Constraints
+- Architectural boundaries
+
+Do not write code yet.
+```
+
+The goal is simple:
+
+```text
+Persistent State
+      >
+Conversation History
+```
+
+Architectural intent must survive beyond the current chat session.
+
+---
+
+# Part 2: Architectural Consistency Collapse
+
+## The Silent Failure
+
+Once context begins disappearing, another problem emerges.
+
+Teams often assume architecture is healthy because no major architectural rules have been violated.
+
+This assumption is dangerous.
+
+Long before architecture fails, consistency fails.
+
+This is Architectural Consistency Collapse.
+
+The architecture may still exist.
+
+The implementations stop looking alike.
+
+## Practical Example
+
+Suppose a company follows a layered architecture.
+
+The intended structure is:
+
+```text
+Controller
+    ↓
+Service
+    ↓
+Repository
+```
+
+Feature A generated by one engineer:
+
+```text
+OrderController
+OrderService
+OrderRepository
+```
+
+Feature B generated by another engineer:
+
+```text
+CustomerHandler
+CustomerManager
+CustomerDAO
+```
+
+Feature C:
+
+```text
+ProductProcessor
+ProductStore
+```
+
+All features technically respect the architecture.
+
+Nothing appears broken.
+
+However, every implementation follows a different pattern.
+
+## Another Example
+
+Error handling evolves differently across features.
+
+Feature A:
+
+```text
+throws RuntimeException
+```
+
+Feature B:
+
+```text
+Result<T>
+```
+
+Feature C:
+
+```text
+Either<Error,Result>
+```
+
+Feature D:
+
+```text
+CustomErrorResponse
+```
+
+The system still works.
+
+But consistency is gone.
+
+## Why This Happens
+
+Agents are heavily influenced by local context.
+
+They often optimize for:
+
+```text
+What is the fastest way to solve this task?
+```
+
+rather than:
+
+```text
+What is the standard way our organization solves this problem?
+```
+
+Without persistent guidance, each implementation becomes slightly different.
+
+Over time:
+
+```text
+Shared Patterns
+       ↓
+Pattern Variations
+       ↓
+Inconsistent Implementations
+       ↓
+Architectural Confusion
+```
+
+## Organizational Symptoms
+
+Architects begin hearing:
+
+> Which pattern should we use?
+
+> Why does every service look different?
+
+> Which error handling standard is correct?
+
+> Is this the new way or the old way?
+
+When these questions appear regularly, consistency is already deteriorating.
+
+## The Practical Fix: Implementation Standards
+
+Architecture alone is insufficient.
+
+Teams need implementation standards.
+
+Example:
+
+```text
+Every feature must contain:
+
+Controller
+Service
+Repository
+DTO
+Unit Test
+```
+
+Naming conventions:
+
+```text
+*Controller
+*Service
+*Repository
+```
+
+Error handling:
+
+```text
+Always use Result<T>
+```
+
+Testing:
+
+```text
+One unit test suite per service
+```
+
+These rules become part of the agent's working context.
+
+Consistency should be intentional, not accidental.
+
+---
+
+# Part 3: Architecture Drift
+
+## The Visible Failure
+
+Architectural Consistency Collapse is often the warning sign.
+
+Architecture Drift is the consequence.
+
+At this stage, teams are no longer merely implementing things differently.
+
+They are implementing things incorrectly.
+
+System boundaries begin eroding.
+
+## Practical Example
+
+Original architecture:
+
+```text
+Controller
+      ↓
+Service
+      ↓
+Repository
+```
+
+An agent introduces a shortcut:
+
+```text
+Controller
+      ↓
+Repository
+```
+
+A later feature introduces:
+
+```text
+Controller
+      ↓
+Database
+```
+
+Another introduces:
+
+```text
+UI
+ ↓
+Database
+```
+
+Each decision appears reasonable in isolation.
+
+Collectively, they dismantle the architecture.
+
+## Why Architecture Drift Accelerates
+
+Once consistency disappears, engineers lose confidence in the standard approach.
+
+When no obvious pattern exists, every new task becomes a fresh design exercise.
+
+Eventually people begin asking:
+
+> Why do we even need the service layer?
+
+At that point the architecture is already weakening.
+
+## Symptoms
+
+Technical indicators:
+
+* Cross-layer imports
+* Circular dependencies
+* Service boundary erosion
+* Duplicate business logic
+* Shared mutable models
+
+Organizational indicators:
+
+* Architecture diagrams become outdated
+* Teams stop discussing boundaries
+* Code reviews focus on syntax rather than design
+* New developers struggle to identify patterns
+
+## Practical Fix: Architectural Guardrails
+
+Documentation alone cannot prevent drift.
+
+The architecture must become enforceable.
+
+Example:
+
+```yaml
+forbidden:
+  - controller -> repository
+  - ui -> database
+  - domain -> infrastructure
+```
+
+The build should fail automatically when boundaries are violated.
+
+Architecture should be treated like a testable artifact.
+
+The strongest architectural principle is not:
+
+> Please follow this rule.
+
+It is:
+
+> This rule is enforced automatically.
+
+---
+
+# Part 4: Verification Blindness
+
+## The Most Dangerous Failure
+
+Verification Blindness is where technical problems become business problems.
+
+By this point:
+
+* Context has weakened
+* Consistency has declined
+* Architecture has started drifting
+
+Yet many organizations still continue shipping successfully.
+
+The final failure occurs when nobody notices.
+
+## Practical Example
+
+An agent modifies pricing logic.
+
+Original:
+
+```text
+price * taxRate
+```
+
+Generated implementation:
+
+```text
+price + taxRate
+```
+
+The implementation appears reasonable.
+
+Generated tests also pass.
+
+The pull request includes a professional explanation.
+
+The reviewer scans it quickly and approves.
+
+The bug reaches production.
+
+The root cause is not poor code generation.
+
+The root cause is poor verification.
+
+## Why This Happens
+
+As AI systems become more capable, humans naturally trust them more.
+
+This is a well-known phenomenon called automation bias.
+
+The danger is subtle.
+
+Engineers stop asking:
+
+> Is this correct?
+
+and start asking:
+
+> Does this look correct?
+
+Those are fundamentally different questions.
+
+## The Practical Fix: Evidence-Based Validation
+
+Never accept:
+
+```text
+Task completed successfully.
+```
+
+Require evidence.
+
+Every implementation should provide:
+
+```text
+Requirements reviewed
+
+Architectural impact
+
+Files modified
+
+Tests executed
+
+Known risks
+
+Validation results
+```
+
+The review process should focus on evidence rather than explanations.
+
+## Independent Review
+
+A useful pattern is:
+
+```text
+Planning Agent
+        ↓
+Implementation Agent
+        ↓
+Review Agent
+        ↓
+Human Reviewer
+```
+
+Different responsibilities.
+
+Different perspectives.
+
+Different incentives.
+
+Verification should never rely solely on the entity that generated the code.
+
+---
+
+# The Complete Lifecycle
+
+The most important insight is that these failures are connected.
+
+They rarely occur independently.
+
+The lifecycle typically unfolds like this:
+
+```text
+Context Window Collapse
+        ↓
+Requirements become ambiguous
+
+        ↓
+
+Specification Drift
+        ↓
+Requirements evolve unintentionally
+
+        ↓
+
+Architectural Consistency Collapse
+        ↓
+Implementations become inconsistent
+
+        ↓
+
+Architecture Drift
+        ↓
+System boundaries erode
+
+        ↓
+
+Verification Blindness
+        ↓
+Problems are no longer detected
+
+        ↓
+
+Production Incidents
+```
+
+By the time organizations notice Architecture Drift, the root cause often originated much earlier with Context Collapse.
+
+By the time production incidents appear, the failure usually began months earlier with weakening verification practices.
+
+---
+
+# Building an AI-Native Engineering Process
+
+Organizations adopting Agentic Software Engineering need new controls.
+
+The most effective pattern emerging across successful teams is:
+
+```text
+Layer 0
+Research & Planning
+        ↓
+
+Layer 1
+State Anchoring
+(requirements.md,
+architecture.md,
+decisions.md)
+
+        ↓
+
+Layer 2
+Implementation Standards
+(patterns, conventions,
+templates)
+
+        ↓
+
+Layer 3
+Architectural Guardrails
+(boundary enforcement)
+
+        ↓
+
+Layer 4
+Independent Review
+(validation and verification)
+
+        ↓
+
+Human Approval
+```
+
+This approach acknowledges a simple reality:
+
+Agents are exceptionally good at generating solutions.
+
+They are far less reliable at preserving long-term architectural intent.
+
+That responsibility remains with engineers, architects, and engineering leaders.
+
+---
+
+# Conclusion
+
+The future of software engineering will not be defined by who has access to the most powerful model.
+
+It will be defined by who builds the most reliable engineering system around those models.
+
+The most successful organizations will understand that architectural quality does not degrade suddenly. It degrades gradually through a sequence of small failures.
+
+First, context is lost.
+
+Then requirements drift.
+
+Then consistency disappears.
+
+Then architecture erodes.
+
+Then verification weakens.
+
+Finally, production problems emerge.
+
+The organizations that recognize and interrupt this chain early will capture the benefits of Agentic Software Engineering without sacrificing the architectural integrity that allows systems to evolve for years.
