@@ -23,3 +23,26 @@ standards and best practices when contributing or reviewing pull requests.
   - Use Javadoc for public classes and methods.
   - Write clear, concise comments where necessary.
   - Remove commented-out code before merging.
+ 
+---
+
+## Spring Boot Best Practices
+
+- **Component Scanning:**
+  - Use @Component`, `@Service`, `@Repository` and @Controller' appropriately.
+- **Configuration:**
+  - Externalize configuration using application.properties' or `application.yml.
+  - Avoid hardcoding values.
+- **Dependency Injection:**
+  - Prefer constructor injection over field injection (Avoid `@Autowired directly on fields).
+- **Exception Handling:**
+  - Use `@ControllerAdvice for global exception handling.
+  - Return meaningful error messages and appropriate HTTP status codes.
+  - Don't catch and just rethrow them.
+- **Validation:**
+  - Use @Valid and validation annotations for request DTOS.
+- **Logging:**
+  - Use Loggers and declare correctly like `private static final Logger logger = LoggerFactory.getLogger(ClassName.class);`.
+  - Avoid logging sensitive information.
+ 
+    
