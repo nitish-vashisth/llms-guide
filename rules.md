@@ -44,5 +44,21 @@ standards and best practices when contributing or reviewing pull requests.
 - **Logging:**
   - Use Loggers and declare correctly like `private static final Logger logger = LoggerFactory.getLogger(ClassName.class);`.
   - Avoid logging sensitive information.
+- **Testing:**
+- Write unit and integration tests for all new features.
+- Test validation, edge cases, and exception flows
+- Write Integration Tests for all service endpoints.
+- Each test should validate a single scenario or behavior.
+- Structure tests to follow the AAA (Arrange-Act-Assert) pattern.
+- **Immutability:**
+
+
+
+
+
+
+
+
+
  
     
