@@ -51,13 +51,31 @@ standards and best practices when contributing or reviewing pull requests.
 - Each test should validate a single scenario or behavior.
 - Structure tests to follow the AAA (Arrange-Act-Assert) pattern.
 - **Immutability:**
+  - Create immutable object where possible
+- **API Documentation:**
+  - Use Swagger/OpenAPI annotations to document all REST endpoints.
+- **Performance Considerations:**
+  - Ensure efficient use of resources in API design.
+- **Thread Safety and Concurrency:**
+  - Review code for thread safety and proper handling of concurrency in shared resources or services
+- **Error Handling Consistency:**
+  - Ensure error responses follow a consistent structure (e.g., using a standard ErrorResponse` class).
+- **Asynchronous Programming:**
+  - Use proper asynchronous programming techniques (e.g., CompletableFuture`, `@Async) and avoid blocking calls in non-blocking contexts.
 
+---
 
+## Additional Best Practices
 
-
-
-
-
+- **Dependency Management:**
+  - Remove unused dependencies from `pom.xml`
+-  **Access Modifiers:**
+  -  Use appropriate access modifiers (e.g.,`private`, `protected`, `public') to encapsulate class members.
+  - Prefer 'final' for variables that don't change.
+  - Always declare static methods first, followed by public, protected and private methods.
+- **Security Best Practices:**
+  - Avoid hardcoded secrets or credentials.
+  - Use tools like Spring Boot's @Configuration Properties or externalized secrets management (e.g., AWS Secrets Manager, HashiCorp
 
 
  
