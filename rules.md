@@ -76,7 +76,26 @@ standards and best practices when contributing or reviewing pull requests.
 - **Security Best Practices:**
   - Avoid hardcoded secrets or credentials.
   - Use tools like Spring Boot's @Configuration Properties or externalized secrets management (e.g., AWS Secrets Manager, HashiCorp
+- **Code Coverage:**
+  - Maintain a minimum code coverage threshold (e.g., 80%) using tools like JaCoCo/SonarQube Coverage.
+- **Code Formatting Tools:**
+  - Integrate automated code formatting tools (e.g., Checkstyle for Java) into the CI/CD pipeline.
+- **Documentation for Complex Logic:**
+  - Document complex business logic or workflows in the code or supplementary design documents.
+- **CI/CD Integration:**
+- Ensure all PRS pass CI/CD checks, including build success, test execution, and static code analysis.
 
+---
 
- 
-    
+## Java Practices
+- **Indentation:**
+  - Use 4 spaces for indentation; avoid tabs.
+- **Annotations:**
+  - Use @Override for overridden methods.
+  - Use @NotNull' and @Nullable' annotations where applicable.
+- **Streams and Lambdas:**
+  - Prefer streams for collection processing but avoid overly complex stream chains.
+  - Use method references (Class:: method`) where possible.
+- **Logging:**
+  - Use SLF4J for logging
+  - Avoid using `System.out.println` or `printStackTrace`.
