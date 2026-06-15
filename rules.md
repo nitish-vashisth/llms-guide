@@ -99,3 +99,39 @@ standards and best practices when contributing or reviewing pull requests.
 - **Logging:**
   - Use SLF4J for logging
   - Avoid using `System.out.println` or `printStackTrace`.
+ - **Handling Null:**
+   - Use Optional in Java.
+   - Avoid returning 'null' from methods.
+  
+---
+## Pull Request Checklist
+Before submitting or approving a PR, ensure
+- Code compiles and passes all tests.
+- No commented-out or dead code.
+- Follows naming and formatting conventions. +- Includes relevant unit/integration tests. + - Documentation is updated (if applicable)
+- No hardcoded secrets or credentials.
+- All dependencies are up-to-date and necessary. No unnecessary imports or unused variables.
+- No wildcard imports (e.g., import java.util.*;`).
+- Spring Boot best practices followed.
+- Code is modular and adheres to SOLID principles. Favor readability, tastability, and separation of concerns.
+- Coding language conventions and practices mentioned in this doc are followed.
+- Database schema changes are reviewed and tested
+- REST endpoints are documented using Swagger/OpenAPI annotations.
+- Code coverage meets the minimum threshold (e.g.,80%)
+- CI/CD checks are successful
+
+## Review Process
+- Review for logic, readability, and maintainability.
+- Suggest improvements, not just corrections.
+- Ensure new code is covered by tests.
+- Check for potential security issues.
+- Approve only when all standards are met.
+
+## References
+- [Spring Boot Best Practices] (https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.developing-web-applications)
+- [Effective Javal(https://www.oreilly.com/library/view/effective-java/9780134686097/)
+- [Java Code Conventions (Oracle)](https://www.oracle.com/java/technologies/javase/codeconventions-contents.html)
+- [JUnit 5 Documentation](https://junit.org/junit5/docs/current/user-guide/)
+- [Mockito Documentation] (https://site.mockito.org/)
+
+**Thank you for helping maintain high standards in this project!**
