@@ -1,0 +1,58 @@
+Project Nexus AI: Persistent Project Intelligence
+Tagline: One Project. One Memory. Every Decision. Every Engineer.
+
+The Problem
+Software development is fragmented. Context is scattered across Jira, Slack, GitHub, and Confluence. Engineers spend 20–40% of their time searching for information, reconstructing project context, or waiting for teammates to answer repeat questions—costing organizations thousands of hours annually.
+
+Our Solution: The Persistent Intelligence Layer
+Project Nexus AI acts as the "long-term memory" of a software project. By linking engineering artifacts—tasks, code, ADRs, and discussions—into a unified Knowledge Graph, the platform enables an AI agent to reason across the entire project lifecycle.
+
+Core Features
+
+Single-Command Context: Use "Load Project" to instantly hydrate an AI agent with the full history and intent of a project.
+
+Relational Memory: Unlike simple vector stores, our Knowledge Graph maps the relationships between a Jira ticket, a specific code commit, and the ADR that justified the design.
+
+Agentic Teammate: An AI that doesn't just write code, but "remembers" the architectural decisions and trade-offs made months ago.
+
+Business Impact
+
+Onboarding: 30–50% faster ramp-up time for new engineers.
+
+Efficiency: 20–40% reduction in time spent searching for project documentation.
+
+Resilience: Drastically reduced "bus factor" by making historical decisions discoverable.
+
+Part 2: How to Build the "Winning" Demo
+To satisfy the requirement for a "working prototype" that shows AI in action, follow this "Agentic UX" blueprint.
+
+1. The "Magic Moment" Demo Flow
+Do not show login screens or settings. Start with the "Load Project" command.
+
+The Hook: Start with a "stale" state. Show an engineer asking: "Why are we using Kafka here instead of RabbitMQ?" The current AI (or a generic bot) fails because it lacks context.
+
+The Action: The user types /load-project Payments-Platform.
+
+The Reveal: Show a "Hydration" UI (a progress bar or a quick dashboard) showing the agent pulling in Jira tickets, Git commits, and ADRs.
+
+The Payoff: Ask the same question again. Now, the agent provides a detailed answer: "We moved to Kafka in June 2025 to handle high-throughput event streaming, as documented in ADR-042 and discussed in the #arch-payments Slack thread."
+
+2. Technical Implementation Strategy
+The Knowledge Graph: You don't need a massive enterprise database. Use SQLite with a few tables representing your core entities (Artifacts, Decisions, Links). To the AI, this is the graph.
+
+Agent Logic (The "Brain"): Use a framework like LangChain or simple OpenAI/Anthropic API calls. The agent should:
+
+Observe the user query.
+
+Use a "Tool" (a simple SQL query function) to fetch relevant nodes/relationships from your SQLite DB.
+
+Reason about the context to provide the answer.
+
+Keep it Simple: Focus on the provenance—the AI must cite its source (e.g., "Source: ADR-042"). This is the most impressive part of a demo.
+
+3. Winning Tips for the Pitch
+Human Voiceover: Do not use AI-generated voiceovers for your demo video or presentation. Your passion and explanation of the "why" are crucial for judges.
+
+The "Vibe" Coding: Use tools like Cursor or Windsurf to build your prototype fast. Spend your time on the integration (connecting the Jira API/Mock and Git data) rather than on perfect UI design.
+
+The Evaluation Rubric: Judges will look for "Task Completion Rate" and "Tool-Use Accuracy". Ensure your demo shows the agent actually using a tool (fetching data) rather than just hallucinating a smart answer.
